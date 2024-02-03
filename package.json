@@ -1,0 +1,19 @@
+{
+  "name": "squeamish-zinc-transfer-97nmr",
+  "productName": "squeamish-zinc-transfer-97nmr",
+  "description": "My Electron application description",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "BlueCitizen",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "python-shell": "^5.0.0"
+  },
+  "devDependencies": {
+    "electron": "28.2.1"
+  }
+}
