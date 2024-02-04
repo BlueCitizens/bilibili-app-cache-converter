@@ -10,10 +10,10 @@
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "python-shell": "^5.0.0"
-  },
   "devDependencies": {
     "electron": "28.2.1"
+  },
+  "dependencies": {
+    "python-shell": "^5.0.0"
   }
 }
