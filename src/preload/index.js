@@ -1,5 +1,10 @@
-import { contextBridge } from 'electron'
+// import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+const { contextBridge, ipcRenderer } = require('electron/renderer')
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  openFile: () => ipcRenderer.invoke('dialog:openFile')
+})
 
 // Custom APIs for renderer
 const api = {}

@@ -1,7 +1,14 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+
+async function handleFileOpen() {
+  const { canceled, filePaths } = await dialog.showOpenDialog({ properties: ['openDirectory'] })
+  if (!canceled) {
+    return filePaths[0]
+  }
+}
 
 function createWindow() {
   // Create the browser window.
@@ -61,6 +68,7 @@ function stopServer() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  ipcMain.handle('dialog:openFile', handleFileOpen)
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
 

@@ -1,12 +1,17 @@
 <template>
-    <img alt="logo" class="logo" src="@renderer/assets/electron.svg" />
-    <div class="creator">Powered by electron-vite</div>
-    <div class="text">
-        Build an Electron app with
-        <span class="vue">Vue</span>
+    <div class="mdui-theme-dark">
+        <mdui-text-field readonly v-model="this.path" variant="outlined" label="缓存文件路径">
+            <mdui-button-icon slot="end-icon" @click="triggerPath">
+                <mdui-icon-attach-file></mdui-icon-attach-file>
+            </mdui-button-icon>
+        </mdui-text-field>
+        <!-- <label for="choosepath">666</label> -->
+        <input id="choosepath" type='file' style="display: none;" v-on:change="triggerPath" webkitdirectory directory />
+        <mdui-button v-on:click="requestConvert">转换</mdui-button>
+        <!-- <button v-on:click="triggerPath" type="button" id="btn">Open a File</button>
+        File path: <strong id="filePath"></strong> -->
     </div>
-    <p class="tip">Please try pressing <code>F12</code> to open the devTool</p>
-    <mdui-button>Button</mdui-button>
+
     <div class="actions">
         <div class="action">
             <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">Documentation</a>
@@ -20,10 +25,71 @@
     </div>
     <Versions />
 </template>
-<script setup>
+<script>
 import Versions from './Versions.vue'
 import 'mdui/mdui.css';
-import 'mdui';
+import 'mdui/components/text-field.js';
+import 'mdui/components/button.js';
+import 'mdui/components/icon.js';
+import 'mdui/components/button-icon.js';
+import '@mdui/icons/attach-file.js';
+import { snackbar } from 'mdui/functions/snackbar.js';
+import { alert } from 'mdui/functions/alert.js';
+import { hello } from '@renderer/api';
 
-const ipcHandle = () => window.electron.ipcRenderer.send('ping')
+
+
+export default {
+    name: 'index',
+    data() {
+        return {
+            path: ''
+        }
+    },
+    methods: {
+        openChoose() {
+            choosepath.click()
+        },
+        // 触发主进程 打开文件选择
+        async triggerPath() {
+            const filePath = await window.electronAPI.openFile()
+            this.path = filePath
+        },
+        requestConvert() {
+            hello().then((response) => {
+                this.info(response.data)
+            }).catch((error) => {
+                console.log(error);
+            });
+        },
+        info(message) {
+            snackbar({
+                message: message,
+                action: "Undo",
+                onActionClick: () => console.log("click action button")
+            });
+        },
+        warn() {
+            alert({
+                headline: "Alert Title",
+                description: "Alert description",
+                confirmText: "OK",
+                onConfirm: () => console.log("confirmed"),
+            });
+        },
+        ipcHandle() {
+            window.electron.ipcRenderer.send('ping')
+        },
+    },
+    mounted() {
+        /*         const btn = document.getElementById('btn')
+                const filePathElement = document.getElementById('filePath')
+        
+                btn.addEventListener('click', async () => {
+                    const filePath = await window.electronAPI.openFile()
+                    filePathElement.innerText = filePath
+                }) */
+    }
+}
+
 </script>

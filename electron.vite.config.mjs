@@ -15,6 +15,26 @@ export default defineConfig({
         '@renderer': resolve('src/renderer/src')
       }
     },
-    plugins: [vue()]
+    plugins: [vue({
+      template: {
+        compilerOptions: {
+          // 所有以 mdui- 开头的标签名都是 mdui 组件
+          isCustomElement: (tag) => tag.startsWith('mdui-')
+        }
+      }
+    })],
+    server: {
+      host: 'localhost',
+      port: 5173,
+      strictPort: false,
+      proxy: {
+        '/api': {
+          target: `http://127.0.0.1:5001`,
+          // target: `http://103.82.54.214:8888/`,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      },
+    }
   }
 })

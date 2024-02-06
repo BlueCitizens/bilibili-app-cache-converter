@@ -20,6 +20,8 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
+    "@mdui/icons": "^1.0.2",
+    "axios": "^1.6.7",
     "electron-updater": "^6.1.7",
     "mdui": "^2.0.3",
     "python-shell": "^5.0.0",
