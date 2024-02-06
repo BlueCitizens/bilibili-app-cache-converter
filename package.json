@@ -21,7 +21,9 @@
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
     "electron-updater": "^6.1.7",
-    "python-shell": "^5.0.0"
+    "mdui": "^2.0.3",
+    "python-shell": "^5.0.0",
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.1",
