@@ -1,23 +1,36 @@
 <template>
-    <div class="mdui-theme-dark">
-        <mdui-text-field readonly v-model="this.form.path" variant="outlined" label="缓存文件路径">
-            <mdui-button-icon slot="end-icon" @click="triggerPath">
-                <mdui-icon-attach-file></mdui-icon-attach-file>
-            </mdui-button-icon>
-        </mdui-text-field>
-        <!-- <label for="choosepath">666</label> -->
-        <input id="choosepath" type='file' style="display: none;" v-on:change="triggerPath" webkitdirectory directory />
-        <mdui-button v-on:click="requestConvert">转换</mdui-button>
-        <!-- <button v-on:click="triggerPath" type="button" id="btn">Open a File</button>
-        File path: <strong id="filePath"></strong> -->
+    <div class="text mdui-theme-auto">
+        <div class="">
+            <mdui-card style="width: 400px;padding: 20px 20px 20px 20px;">
+                <mdui-linear-progress :style="this.progress.visible"></mdui-linear-progress>
+                <mdui-text-field style="margin-bottom: 20px;" v-model="this.form.path" variant="outlined"
+                    label="Cache Directory">
+                    <mdui-button-icon slot="end-icon" @click="triggerPath">
+                        <mdui-icon-attach-file></mdui-icon-attach-file>
+                    </mdui-button-icon>
+                </mdui-text-field>
+                <mdui-text-field style="margin-bottom: 20px;" v-model="this.form.output" variant="outlined"
+                    label="Output Directory">
+                    <mdui-button-icon slot="end-icon" @click="triggerPath">
+                        <mdui-icon-attach-file></mdui-icon-attach-file>
+                    </mdui-button-icon>
+                </mdui-text-field>
+                <mdui-button full-width variant="tonal" :disabled="this.btn" v-on:click="requestConvert">
+                    <mdui-icon-autorenew></mdui-icon-autorenew>
+                </mdui-button>
+            </mdui-card>
+        </div>
     </div>
 
-    <div class="actions">
+
+    <div class="actions mdui-theme-auto">
         <div class="action">
-            <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">Documentation</a>
-        </div>
-        <div class="action">
-            <a target="_blank" rel="noreferrer" @click="ipcHandle">Send IPC</a>
+            <mdui-chip elevated href="https://www.mdui.org" target="_blank">
+                GitHub
+            </mdui-chip>
+            <mdui-chip elevated href="https://www.mdui.org" target="_blank">
+                GitHub
+            </mdui-chip>
         </div>
     </div>
     <Versions />
@@ -27,11 +40,21 @@ import Versions from './Versions.vue'
 import 'mdui/mdui.css';
 import 'mdui/components/text-field.js';
 import 'mdui/components/button.js';
+import 'mdui/components/fab.js';
 import 'mdui/components/icon.js';
 import 'mdui/components/button-icon.js';
+import 'mdui/components/card.js';
+import 'mdui/components/chip.js';
 import '@mdui/icons/attach-file.js';
+import '@mdui/icons/autorenew.js';
+import 'mdui/components/layout.js';
+import 'mdui/components/layout-item.js';
+import 'mdui/components/layout-main.js';
+import 'mdui/components/linear-progress.js';
 import { snackbar } from 'mdui/functions/snackbar.js';
+import { getTheme } from 'mdui/functions/getTheme.js';
 import { alert } from 'mdui/functions/alert.js';
+import { setColorScheme } from 'mdui/functions/setColorScheme.js';
 import { hello, convert } from '@renderer/api';
 
 
@@ -41,20 +64,25 @@ export default {
     data() {
         return {
             form: {
-                path: ''
+                path: '',
+                output: ''
+            },
+            btn: false,
+            progress: {
+                visible: 'visibility: hidden',
+                value: '0'
             }
         }
     },
     methods: {
-        openChoose() {
-            choosepath.click()
-        },
         // 触发主进程 打开文件选择
         async triggerPath() {
             const filePath = await window.electronAPI.openFile()
             this.form.path = filePath
         },
         requestConvert() {
+            this.btn = true
+            this.progress.visible = ''
             let form = JSON.parse(JSON.stringify(this.form));
             convert({ form }).then((response) => {
 
@@ -70,7 +98,10 @@ export default {
             snackbar({
                 message: message,
                 action: "Undo",
-                onActionClick: () => console.log("click action button")
+                onActionClick: () => {
+                    this.btn = false
+                    this.progress.visible = 'visibility: hidden'
+                }
             });
         },
         warn() {
@@ -81,18 +112,13 @@ export default {
                 onConfirm: () => console.log("confirmed"),
             });
         },
-        ipcHandle() {
-            window.electron.ipcRenderer.send('ping')
-        },
+    },
+    created() {
+
+        setColorScheme('#80DAF6');
     },
     mounted() {
-        /*         const btn = document.getElementById('btn')
-                const filePathElement = document.getElementById('filePath')
-        
-                btn.addEventListener('click', async () => {
-                    const filePath = await window.electronAPI.openFile()
-                    filePathElement.innerText = filePath
-                }) */
+        console.log(getTheme())
     }
 }
 

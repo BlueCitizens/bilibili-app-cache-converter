@@ -6,25 +6,20 @@ from py import hello
 app = Flask(__name__)
 
 
-@app.route('/')
-def homepage():
-    home = 'flask_welcome.html'
-    return render_template(home)
-
 @app.route('/hello')
 def hell():
     return 'hello'
 
-@app.route('/product/<a>',methods=['GET'])
-def getTest():
+@app.route('/test/<a>',methods=['GET'])
+def getTest(a):
     return 0
 
 @app.route('/convert',methods=['POST'])
 def convert():
     if request.method == 'POST':
         data = json.loads(request.data)
-        path = json.dumps(data['form'])
-        res = hello.hello(path)
+        # path = json.dumps(data['form'])
+        res = hello.hello(data['form'])
     return res
 
 

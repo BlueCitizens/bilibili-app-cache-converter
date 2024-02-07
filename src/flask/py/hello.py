@@ -1,5 +1,3 @@
-# ./hello.py
-
-def hello(str):
-    return str + ", hello from python"
+def hello(val):
+    return val['path'] + val['output']
 

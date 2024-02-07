@@ -24,11 +24,14 @@
 }
 
 :root {
-  --color-background: var(--ev-c-black);
+  --color-background: var(--ev-c-white);
   --color-background-soft: var(--ev-c-black-soft);
   --color-background-mute: var(--ev-c-black-mute);
 
   --color-text: var(--ev-c-text-1);
+
+  --mdui-color-primary-light: 103, 80, 164;
+  --mdui-color-primary-dark: 208, 188, 255;
 }
 
 *,
