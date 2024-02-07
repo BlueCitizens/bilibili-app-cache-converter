@@ -1,6 +1,6 @@
 <template>
     <div class="mdui-theme-dark">
-        <mdui-text-field readonly v-model="this.path" variant="outlined" label="缓存文件路径">
+        <mdui-text-field readonly v-model="this.form.path" variant="outlined" label="缓存文件路径">
             <mdui-button-icon slot="end-icon" @click="triggerPath">
                 <mdui-icon-attach-file></mdui-icon-attach-file>
             </mdui-button-icon>
@@ -19,9 +19,6 @@
         <div class="action">
             <a target="_blank" rel="noreferrer" @click="ipcHandle">Send IPC</a>
         </div>
-        <div class="action">
-            <a target="_blank" href="http://0.0.0.0:5001/hello">Send flask</a>
-        </div>
     </div>
     <Versions />
 </template>
@@ -35,7 +32,7 @@ import 'mdui/components/button-icon.js';
 import '@mdui/icons/attach-file.js';
 import { snackbar } from 'mdui/functions/snackbar.js';
 import { alert } from 'mdui/functions/alert.js';
-import { hello } from '@renderer/api';
+import { hello, convert } from '@renderer/api';
 
 
 
@@ -43,7 +40,9 @@ export default {
     name: 'index',
     data() {
         return {
-            path: ''
+            form: {
+                path: ''
+            }
         }
     },
     methods: {
@@ -53,10 +52,15 @@ export default {
         // 触发主进程 打开文件选择
         async triggerPath() {
             const filePath = await window.electronAPI.openFile()
-            this.path = filePath
+            this.form.path = filePath
         },
         requestConvert() {
-            hello().then((response) => {
+            let form = JSON.parse(JSON.stringify(this.form));
+            convert({ form }).then((response) => {
+
+                console.log(response.data)
+                if (response.code === 200) {
+                }
                 this.info(response.data)
             }).catch((error) => {
                 console.log(error);

@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 # from flask_cors import cross_origin
-import signal
+import signal, json
+from py import hello
 
 app = Flask(__name__)
 
@@ -11,8 +12,20 @@ def homepage():
     return render_template(home)
 
 @app.route('/hello')
-def hello():
+def hell():
     return 'hello'
+
+@app.route('/product/<a>',methods=['GET'])
+def getTest():
+    return 0
+
+@app.route('/convert',methods=['POST'])
+def convert():
+    if request.method == 'POST':
+        data = json.loads(request.data)
+        path = json.dumps(data['form'])
+        res = hello.hello(path)
+    return res
 
 
 def signal_handler(sig, frame):

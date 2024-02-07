@@ -44,7 +44,7 @@ function createWindow() {
 
 
 var { PythonShell } = require('python-shell');
-let pyshell = new PythonShell('app.py');
+let pyshell = new PythonShell('src/flask/app.py');
 
 // 启动flask server，通过python-shell 调用python脚本（开发调试阶段）
 function startServer() {
