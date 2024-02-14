@@ -1,5 +1,5 @@
-from py import hello
+import subprocess
 
+out = subprocess.run("node --version", capture_output=True)
 
-val = {'path':'老周','output':'29','job':'程序员'}
-print(hello.hello(val))
+print(out.stdout)

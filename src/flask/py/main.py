@@ -5,16 +5,18 @@ import json
 import os
 import subprocess
 import shutil
+from . import danmaku2ass
 import logging
 
 logging.basicConfig(level=logging.DEBUG,  # 日志级别
+                    filename='test.log',
                     format='%(asctime)s-[%(filename)s-->line:%(lineno)d]-[%(levelname)s]%(message)s')
 
 # Press the green button in the gutter to run the script.
-if __name__ == '__main__':
+def convert(val):
 
-    downloadDir = "E:/bilicache/download"  # 存放从手机复制而来的文件夹的地方
-    outputDir = "E:/converted"  # 存放最终mp4文件的地方
+    downloadDir = val['path']  # 存放从手机复制而来的文件夹的地方
+    outputDir = val['output']  # 存放最终mp4文件的地方
     REMOVEOri = False  # 如果需要将源文件删除，将其更改为True
 
     os.chdir(downloadDir)
@@ -49,8 +51,17 @@ if __name__ == '__main__':
                 '\\') + 65248))
             videoSubtitle = row_data.get('page_data', 'no page data').get('download_subtitle', 'no subtitle').replace(
                 '/', chr(ord('/') + 65248)).replace('\\', chr(ord('\\') + 65248))
+            videoQualityWidth = row_data.get('page_data', 'no page data').get('width', 'no width')
+            videoQualityHeight = row_data.get('page_data', 'no page data').get('height', 'no height')
             logging.info("当前视频主标题: " + videoTitle)
             logging.info("当前分p副标题: " + videoSubtitle)
+            logging.info("当前分p视频分辨率: " + str(videoQualityWidth) + '*' + str(videoQualityHeight))
+
+            # 转换后的danmaku.ass在与danmaku.xml同级目录下
+            danmakuPathOrigin = os.path.join(directory, videoNameDir, cDir, "danmaku.ass")
+
+            danmaku2ass.Danmaku2ASS('danmaku.xml', 'Bilibili', 'danmaku.ass', videoQualityWidth, videoQualityHeight, 0,
+                        'Microsoft YaHei', 40)
 
             for digitFolder in list(filter(os.path.isdir, os.listdir())):  # 视频一般放在分p文件夹中的数字文件夹中，一般数字文件夹仅一个
                 sepPath = os.path.join(directory, videoNameDir, cDir, digitFolder)
@@ -58,22 +69,26 @@ if __name__ == '__main__':
 
                 # newName = videoName + cDir + ".mp4"
                 if multiFlag == 0:
-                    newName = videoTitle + ".mp4"
+                    newName = videoTitle
                 else:
-                    newName = videoTitle + "-" + videoSubtitle + ".mp4"
-                filePathOfOutput_newName_with_NewPath = os.path.join(outputDir, newName)
+                    newName = videoTitle + "-" + videoSubtitle
+                filePathOutput = os.path.join(outputDir, newName + '.mp4')
+                danmakuPathOutput = os.path.join(outputDir, newName + '.ass')
 
-                if os.path.exists(filePathOfOutput_newName_with_NewPath):
+                if os.path.exists(filePathOutput):
                     logging.warning("视频 " + newName + " 已存在 跳过")
-                    break
+                else:
+                    # 在此路径下调用cmd : ffmpeg -i video.m4s -i audio.m4s -codec copy Output.mp4
 
-                # 在此路径下调用cmd : ffmpeg -i video.m4s -i audio.m4s -codec copy Output.mp4
+                    subprocess.run('ffmpeg -i video.m4s -i audio.m4s -codec copy Output.mp4', shell=True)
+                    # output.mp4的绝对路径
+                    filePathOrigin = os.path.join(directory, videoNameDir, cDir, digitFolder, "Output.mp4")
+                    os.rename(filePathOrigin, filePathOutput)
 
-                subprocess.call('ffmpeg -i video.m4s -i audio.m4s -codec copy Output.mp4', shell=True)
-                # output.mp4的绝对路径
-                filePathOfOutput_oldName = os.path.join(directory, videoNameDir, cDir, digitFolder, "Output.mp4")
-
-                os.rename(filePathOfOutput_oldName, filePathOfOutput_newName_with_NewPath)
+                if os.path.exists(danmakuPathOutput):
+                    logging.warning('检测到已存在ass弹幕文件 将其删除处理')
+                    os.remove(danmakuPathOutput)
+                os.rename(danmakuPathOrigin, danmakuPathOutput)
 
     if REMOVEOri:
         # remove 源文件夹
@@ -82,5 +97,5 @@ if __name__ == '__main__':
         for videoNameDir in list(filter(os.path.isdir, os.listdir())):
             videoNameDirPath = os.path.join(directory, videoNameDir)
             shutil.rmtree(videoNameDirPath)
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    print('5555')
+    return 'true'

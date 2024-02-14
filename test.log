@@ -1,0 +1,39 @@
+2024-02-14 22:02:40,345-[_internal.py-->line:187]-[INFO][31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2024-02-14 22:02:40,346-[_internal.py-->line:187]-[INFO][33mPress CTRL+C to quit[0m
+2024-02-14 22:03:12,057-[main.py-->line:24]-[INFO]Current workspace: E:\bcctest
+2024-02-14 22:03:12,058-[main.py-->line:31]-[INFO]½øÈëÊÓÆµÄ¿Â¼: E:\bcctest\245856254
+2024-02-14 22:03:12,059-[main.py-->line:56]-[INFO]µ±Ç°ÊÓÆµÖ÷±êÌâ: ¡¾ÒìÊÀ½çÇéÐ÷¡¿#10¡¶¥·¥ê¥¦¥¹¤ÎÐÄÄ £¯ÌìÀÇÐÇµÄÐÄÔà¡·
+2024-02-14 22:03:12,059-[main.py-->line:57]-[INFO]µ±Ç°·Öp¸±±êÌâ: ¡¾ÒìÊÀ½çÇéÐ÷¡¿#10¡¶¥·¥ê¥¦¥¹¤ÎÐÄÄ £¯ÌìÀÇÐÇµÄÐÄÔà¡·
+2024-02-14 22:03:12,059-[main.py-->line:58]-[INFO]µ±Ç°·ÖpÊÓÆµ·Ö±æÂÊ: 1440*1080
+2024-02-14 22:03:12,174-[main.py-->line:79]-[WARNING]ÊÓÆµ ¡¾ÒìÊÀ½çÇéÐ÷¡¿#10¡¶¥·¥ê¥¦¥¹¤ÎÐÄÄ £¯ÌìÀÇÐÇµÄÐÄÔà¡· ÒÑ´æÔÚ Ìø¹ý
+2024-02-14 22:03:12,174-[main.py-->line:89]-[WARNING]¼ì²âµ½ÒÑ´æÔÚassµ¯Ä»ÎÄ¼þ ½«ÆäÉ¾³ý´¦Àí
+2024-02-14 22:03:12,175-[app.py-->line:1744]-[ERROR]Exception on /convert [POST]
+Traceback (most recent call last):
+  File "C:\Users\BlueCitizen\anaconda3\envs\bili\Lib\site-packages\flask\app.py", line 2529, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\BlueCitizen\anaconda3\envs\bili\Lib\site-packages\flask\app.py", line 1826, in full_dispatch_request
+    return self.finalize_request(rv)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\BlueCitizen\anaconda3\envs\bili\Lib\site-packages\flask\app.py", line 1845, in finalize_request
+    response = self.make_response(rv)
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\BlueCitizen\anaconda3\envs\bili\Lib\site-packages\flask\app.py", line 2174, in make_response
+    raise TypeError(
+TypeError: The view function did not return a valid response. The return type must be a string, dict, list, tuple with headers or status, Response instance, or WSGI callable, but it was a int.
+2024-02-14 22:03:12,177-[_internal.py-->line:187]-[INFO]127.0.0.1 - - [14/Feb/2024 22:03:12] "[35m[1mPOST /convert HTTP/1.1[0m" 500 -
+2024-02-14 22:05:24,956-[_internal.py-->line:187]-[INFO][31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2024-02-14 22:05:24,956-[_internal.py-->line:187]-[INFO][33mPress CTRL+C to quit[0m
+2024-02-14 22:05:30,752-[main.py-->line:24]-[INFO]Current workspace: E:\bcctest
+2024-02-14 22:05:30,752-[main.py-->line:31]-[INFO]½øÈëÊÓÆµÄ¿Â¼: E:\bcctest\245856254
+2024-02-14 22:05:30,754-[main.py-->line:56]-[INFO]µ±Ç°ÊÓÆµÖ÷±êÌâ: ¡¾ÒìÊÀ½çÇéÐ÷¡¿#10¡¶¥·¥ê¥¦¥¹¤ÎÐÄÄ £¯ÌìÀÇÐÇµÄÐÄÔà¡·
+2024-02-14 22:05:30,754-[main.py-->line:57]-[INFO]µ±Ç°·Öp¸±±êÌâ: ¡¾ÒìÊÀ½çÇéÐ÷¡¿#10¡¶¥·¥ê¥¦¥¹¤ÎÐÄÄ £¯ÌìÀÇÐÇµÄÐÄÔà¡·
+2024-02-14 22:05:30,754-[main.py-->line:58]-[INFO]µ±Ç°·ÖpÊÓÆµ·Ö±æÂÊ: 1440*1080
+2024-02-14 22:05:30,870-[main.py-->line:79]-[WARNING]ÊÓÆµ ¡¾ÒìÊÀ½çÇéÐ÷¡¿#10¡¶¥·¥ê¥¦¥¹¤ÎÐÄÄ £¯ÌìÀÇÐÇµÄÐÄÔà¡· ÒÑ´æÔÚ Ìø¹ý
+2024-02-14 22:05:30,870-[main.py-->line:89]-[WARNING]¼ì²âµ½ÒÑ´æÔÚassµ¯Ä»ÎÄ¼þ ½«ÆäÉ¾³ý´¦Àí
+2024-02-14 22:05:30,871-[_internal.py-->line:187]-[INFO]127.0.0.1 - - [14/Feb/2024 22:05:30] "POST /convert HTTP/1.1" 200 -
+2024-02-14 22:08:15,777-[_internal.py-->line:187]-[INFO][31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5001
+2024-02-14 22:08:15,777-[_internal.py-->line:187]-[INFO][33mPress CTRL+C to quit[0m

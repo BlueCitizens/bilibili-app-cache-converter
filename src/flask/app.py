@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 # from flask_cors import cross_origin
 import signal, json
-from py import hello
+from py import hello, main
 
 app = Flask(__name__)
 
@@ -19,7 +19,7 @@ def convert():
     if request.method == 'POST':
         data = json.loads(request.data)
         # path = json.dumps(data['form'])
-        res = hello.hello(data['form'])
+        res = main.convert(data['form'])
     return res
 
 

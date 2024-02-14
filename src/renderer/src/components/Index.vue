@@ -5,13 +5,13 @@
                 <mdui-linear-progress :style="this.progress.visible"></mdui-linear-progress>
                 <mdui-text-field style="margin-bottom: 20px;" v-model="this.form.path" variant="outlined"
                     label="Cache Directory">
-                    <mdui-button-icon slot="end-icon" @click="triggerPath">
+                    <mdui-button-icon slot="end-icon" @click="triggerPath('path')">
                         <mdui-icon-attach-file></mdui-icon-attach-file>
                     </mdui-button-icon>
                 </mdui-text-field>
                 <mdui-text-field style="margin-bottom: 20px;" v-model="this.form.output" variant="outlined"
                     label="Output Directory">
-                    <mdui-button-icon slot="end-icon" @click="triggerPath">
+                    <mdui-button-icon slot="end-icon" @click="triggerPath('output')">
                         <mdui-icon-attach-file></mdui-icon-attach-file>
                     </mdui-button-icon>
                 </mdui-text-field>
@@ -25,9 +25,6 @@
 
     <div class="actions mdui-theme-auto">
         <div class="action">
-            <mdui-chip elevated href="https://www.mdui.org" target="_blank">
-                GitHub
-            </mdui-chip>
             <mdui-chip elevated href="https://www.mdui.org" target="_blank">
                 GitHub
             </mdui-chip>
@@ -76,20 +73,24 @@ export default {
     },
     methods: {
         // 触发主进程 打开文件选择
-        async triggerPath() {
+        async triggerPath(val) {
             const filePath = await window.electronAPI.openFile()
-            this.form.path = filePath
+            if(val === 'path'){
+                this.form.path = filePath
+            }else if(val === 'output'){
+                this.form.output = filePath
+            }
         },
         requestConvert() {
             this.btn = true
             this.progress.visible = ''
             let form = JSON.parse(JSON.stringify(this.form));
             convert({ form }).then((response) => {
-
                 console.log(response.data)
                 if (response.code === 200) {
                 }
                 this.info(response.data)
+                this.btn = false
             }).catch((error) => {
                 console.log(error);
             });
