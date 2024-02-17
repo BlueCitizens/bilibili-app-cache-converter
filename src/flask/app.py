@@ -1,7 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 # from flask_cors import cross_origin
 import signal, json
-from py import hello, main
+from py import hello
+from pathlib import Path
+
+from py import bili
 
 app = Flask(__name__)
 
@@ -19,7 +22,8 @@ def convert():
     if request.method == 'POST':
         data = json.loads(request.data)
         # path = json.dumps(data['form'])
-        res = main.convert(data['form'])
+        res = bili.convert(data['form'])
+    
     return res
 
 

@@ -91,6 +91,7 @@ export default {
                 }
                 this.info(response.data)
                 this.btn = false
+                this.progress.visible = 'visibility: hidden'
             }).catch((error) => {
                 console.log(error);
             });
