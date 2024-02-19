@@ -1,5 +1,9 @@
-<script setup lang="ts">
-
+<script>
+// export default {
+//   mounted() {
+//     this.$router.push("/")
+//   }
+// }
 </script>
 
 <template>

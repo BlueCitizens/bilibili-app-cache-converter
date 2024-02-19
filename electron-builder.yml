@@ -1,22 +1,32 @@
-appId: com.electron.app
-productName: bilibili-cache-converter-gui
+appId: com.bckun.app
+productName: Bili Cache Converter
 directories:
   buildResources: build
 files:
   - '!**/.vscode/*'
   - '!src/*'
   - '!electron.vite.config.{js,ts,mjs,cjs}'
-  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,nuitka-crash-report.xml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!venv/*'
+  - '!**/node_modules/{axios/*,mdui/*,vue-router/*}'
+  - '!**/node_modules/*/icons/*'
+  - '!app.*/*'
 asarUnpack:
   - resources/**
 win:
-  executableName: bilibili-cache-converter-gui
+  icon: 'build/bili.ico'
+  executableName: bccgui
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  oneClick: false
+  perMachine: true
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: true
+  createStartMenuShortcut: true
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:

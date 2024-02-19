@@ -6,7 +6,7 @@ body {
   justify-content: center;
   overflow: hidden;
   background-image: url('./bilibili.svg');
-  background-color: transparent;
+  /* background-color: transparent; */
   background-size: cover;
   user-select: none;
 }
@@ -83,7 +83,6 @@ code {
 
 .actions {
   display: flex;
-  padding-top: 32px;
   margin: -6px;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -92,29 +91,6 @@ code {
 .action {
   flex-shrink: 0;
   padding: 6px;
-}
-
-.action a {
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  border: 1px solid transparent;
-  text-align: center;
-  font-weight: 600;
-  white-space: nowrap;
-  border-radius: 20px;
-  padding: 0 20px;
-  line-height: 38px;
-  font-size: 14px;
-  border-color: var(--ev-button-alt-border);
-  color: var(--ev-button-alt-text);
-  background-color: var(--ev-button-alt-bg);
-}
-
-.action a:hover {
-  border-color: var(--ev-button-alt-hover-border);
-  color: var(--ev-button-alt-hover-text);
-  background-color: var(--ev-button-alt-hover-bg);
 }
 
 .versions {
@@ -136,7 +112,7 @@ code {
   float: left;
   border-right: 1px solid var(--ev-c-gray-1);
   padding: 0 20px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 14px;
   opacity: 0.8;
   &:last-child {

@@ -1,5 +1,5 @@
 import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
-import { join } from 'path'
+import { join, dirname } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
@@ -38,13 +38,15 @@ function createWindow() {
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+    mainWindow.loadFile(join(__dirname, '../renderer/index.html'), { hash: '/' })
   }
 }
 
 
 var { PythonShell } = require('python-shell');
 let pyshell = new PythonShell('src/flask/app.py');
+let pyProc = require('child_process');
+var myExec = null;
 
 // 启动flask server，通过python-shell 调用python脚本（开发调试阶段）
 function startServer() {
@@ -52,6 +54,25 @@ function startServer() {
     // received a message sent from the Python script (a simple "print" statement)
     console.log(message);
   });
+}
+
+// 启动flask server，通过子进程执行已经将python项目打包好的exe文件（打包阶段）
+function startServer_EXE() {
+  // 当前应用的目录
+  // 由于打包前后 即开发环境和生产环境的根目录不同
+  const appPath = app.isPackaged ? dirname(app.getPath('exe')) : app.getAppPath()
+  // let script = join(__dirname, 'app.exe')
+  let script = join(appPath, 'app.exe')
+  myExec = pyProc.execFile(script, (error, stdout, stderr) => {
+    if (error) {
+      console.log(stderr)
+      throw error;
+    }
+    console.log('flask server start success')
+    console.log(stdout);
+  }); 
+  if (pyProc != null) {
+  }
 }
 
 function stopServer() {
@@ -62,6 +83,64 @@ function stopServer() {
     console.log('Server shutdown normally');
   });
   pyshell.kill('SIGTERM')
+}
+
+const { execSync } = require('child_process');
+const os = require('os');
+const platform = os.platform();
+const process = require('node:process');
+
+const GetProcessInfo = (port) =>
+  new Promise((resolve, reject) => {
+    if (platform === 'win32') {
+      const order = `netstat -aon | findstr ${port}`;
+      try {
+        const stdout = execSync(order);
+        const portInfo = stdout.toString().trim().split(/\s+/);
+        const pId = portInfo[portInfo.length - 1];
+        const processStdout = execSync(`tasklist | findstr ${pId}`);
+        const [pName] = processStdout.toString().trim().split(/\s+/);
+        resolve({
+          pId,
+          pName,
+        });
+        var plist = [], idx
+        for (idx = 0; idx < portInfo.length - 1;) {
+          plist.push(portInfo.slice(idx, idx += 5))
+        }
+        plist.forEach((element) => {
+          console.log('killing' + element)
+          process.kill(element[element.length - 1], 'SIGTERM')
+        })
+        console.log('flask server shutdown success')
+      } catch (error) {
+        reject(error);
+      }
+    } else {
+      const order = `lsof -i :${port}`;
+      try {
+        const stdout = execSync(order);
+        const [pName, pId] = stdout
+          .toString()
+          .trim()
+          .split(/\n/)[1]
+          .split(/\s+/);
+        resolve({
+          pId,
+          pName,
+        });
+      } catch (error) {
+        reject(error);
+      }
+    }
+  });
+
+// 停止flask server 函数
+function stopServer_EXE() {
+  GetProcessInfo('5001')
+  let exc = myExec.kill('SIGTERM')
+  console.log(exc)
+  pyProc = null
 }
 
 // This method will be called when Electron has finished
@@ -79,12 +158,9 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
-
   createWindow()
 
-  startServer()
+  startServer_EXE()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
@@ -100,7 +176,7 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
-  stopServer()
+  stopServer_EXE()
 })
 
 // In this file you can include the rest of your app"s specific main process

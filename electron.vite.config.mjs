@@ -24,13 +24,12 @@ export default defineConfig({
       }
     })],
     server: {
-      host: 'localhost',
+      host: '127.0.0.1',
       port: 5173,
       strictPort: false,
       proxy: {
         '/api': {
           target: `http://127.0.0.1:5001`,
-          // target: `http://103.82.54.214:8888/`,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, '')
         }

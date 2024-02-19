@@ -1,6 +1,6 @@
 import request from '@renderer/axios'
 
-// 请求转换
+// 你好世界
 export function hello(query) {
     return request({
         url: '/hello',

@@ -1,4 +1,11 @@
 .idea
 node_modules
 out
-test_env/
+venv/
+app.dist/
+app.exe
+app.spec
+bilicache.log
+dist/
+npminstall-debug.log
+nuitka-crash-report.xml

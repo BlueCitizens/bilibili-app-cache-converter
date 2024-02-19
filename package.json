@@ -1,10 +1,10 @@
 {
   "name": "bilibili-cache-converter-gui",
-  "version": "1.0.0",
-  "description": "An Electron application with Vue",
+  "version": "1.0.0-fc.1",
+  "description": "Converting Bilibili App Cache to Normal mp4 and ass.",
   "main": "./out/main/index.js",
-  "author": "example.com",
-  "homepage": "https://electron-vite.org",
+  "author": "BlueCitizen",
+  "homepage": "https://github.com/BlueCitizens/bilibili-app-cache-converter",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
@@ -15,7 +15,8 @@
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
     "build:mac": "npm run build && electron-builder --mac",
-    "build:linux": "npm run build && electron-builder --linux"
+    "build:linux": "npm run build && electron-builder --linux",
+    "build-python": "pyinstaller -D -p ./venv/Lib/site-packages src/flask/app.py --distpath ./pydist"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",

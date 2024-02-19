@@ -1,10 +1,8 @@
-from flask import Flask, render_template, request, url_for
-# from flask_cors import cross_origin
+from flask import Flask, request
+from flask_cors import cross_origin
 import signal, json
-from py import hello
-from pathlib import Path
 
-from py import bili
+from scripts import bili
 
 app = Flask(__name__)
 
@@ -13,11 +11,8 @@ app = Flask(__name__)
 def hell():
     return 'hello'
 
-@app.route('/test/<a>',methods=['GET'])
-def getTest(a):
-    return 0
-
 @app.route('/convert',methods=['POST'])
+@cross_origin()
 def convert():
     if request.method == 'POST':
         data = json.loads(request.data)

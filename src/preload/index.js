@@ -1,10 +1,7 @@
-// import { contextBridge } from 'electron'
+import { contextBridge,  ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-const { contextBridge, ipcRenderer } = require('electron/renderer')
+// const { ipcRenderer } = require('electron/renderer')
 
-contextBridge.exposeInMainWorld('electronAPI', {
-  openFile: () => ipcRenderer.invoke('dialog:openFile')
-})
 
 // Custom APIs for renderer
 const api = {}
@@ -14,6 +11,9 @@ const api = {}
 // just add to the DOM global.
 if (process.contextIsolated) {
   try {
+    contextBridge.exposeInMainWorld('electronAPI', {
+      openFile: () => ipcRenderer.invoke('dialog:openFile')
+    })
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api)
   } catch (error) {
