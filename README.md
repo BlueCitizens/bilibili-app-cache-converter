@@ -17,7 +17,7 @@
 使用任何python打包方式，pyinstaller和nuitka都可以正常打包。
 
 ### build electron
-npm run build:win
+```npm run build:win```
 
 ## 致谢
 xml弹幕文件转ass字幕文件使用了该仓库https://github.com/m13253/danmaku2ass
