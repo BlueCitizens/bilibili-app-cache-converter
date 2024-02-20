@@ -6,6 +6,9 @@
 - 像使用任何安装程序一样安装到计算机上
 - 打开即用
 
+### 演示
+[![gif](./screenrecord.gif)](https://github.com/BlueCitizens/bilibili-app-cache-converter/blob/master/screenrecord.gif)
+
 ## 自行构建
 首先打包flask，然后打包Electron
 
