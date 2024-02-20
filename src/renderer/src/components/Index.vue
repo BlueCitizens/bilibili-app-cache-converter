@@ -16,7 +16,7 @@
                     </mdui-button-icon>
                 </mdui-text-field>
                 <mdui-checkbox ref="checkup" checked>UP主Folder</mdui-checkbox>
-                <mdui-checkbox ref="checkdel">删除源</mdui-checkbox>
+                <mdui-checkbox ref="checkdel" disabled>删除源</mdui-checkbox>
                 <mdui-button full-width variant="tonal" :disabled="this.btn" v-on:click="requestConvert">
                     <mdui-icon-autorenew></mdui-icon-autorenew>
                 </mdui-button>
@@ -85,32 +85,10 @@ export default {
             progress: {
                 visible: 'visibility: hidden',
                 value: '0'
-            },
-            websocket: null, // WebSocket对象
+            }
         }
     },
     methods: {
-        setupWebSocket() {
-            this.websocket = new WebSocket("ws链接"); // 创建WebSocket连接
-            this.websocket.onopen = this.onWebSocketOpen; // WebSocket连接打开时的处理函数
-            this.websocket.onmessage = this.onWebSocketMessage; // 收到WebSocket消息时的处理函数
-            this.websocket.onclose = this.onWebSocketClose; // WebSocket连接关闭时的处理函数
-        },
-        onWebSocketOpen() {
-            console.log("链接成功");
-            const initMessage = {
-                type: 'sub',
-                topic: '/aa/bb/cc/d',
-                parameter: {},
-                id: 'bb',
-            };
-            this.sendMessage(JSON.stringify(initMessage));
-        },
-        closeWebSocket() {
-            if (this.websocket) {
-                this.websocket.close(); // 关闭WebSocket连接
-            }
-        },
         check() {
             if (this.checked === false) {
                 this.checked = true

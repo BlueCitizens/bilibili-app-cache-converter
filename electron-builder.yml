@@ -6,8 +6,8 @@ files:
   - '!**/.vscode/*'
   - '!src/*'
   - '!electron.vite.config.{js,ts,mjs,cjs}'
-  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,nuitka-crash-report.xml,CHANGELOG.md,README.md}'
-  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,nuitka-crash-report.xml,CHANGELOG.md,README.md, package.json,requirements.txt}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml,*.log}'
   - '!venv/*'
   - '!**/node_modules/{axios/*,mdui/*,vue-router/*}'
   - '!**/node_modules/*/icons/*'
@@ -17,6 +17,7 @@ asarUnpack:
 win:
   icon: 'build/bili.ico'
   executableName: bccgui
+  requestedExecutionLevel: requireAdministrator
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
@@ -27,6 +28,7 @@ nsis:
   allowToChangeInstallationDirectory: true
   deleteAppDataOnUninstall: true
   createStartMenuShortcut: true
+
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:

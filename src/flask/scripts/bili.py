@@ -5,13 +5,10 @@ from . import danmaku2ass
 from pathlib import Path
 import logging
 
-LOG_PATH = Path.home()
-
 logging.basicConfig(level=logging.DEBUG,  # logging level
                     filename=Path('bilicache.log'),
                     format='%(asctime)s-[%(filename)s-->line:%(lineno)d]-[%(levelname)s]%(message)s')
 
-logging.info(LOG_PATH)
 def validPathName(name:str):
     # 非法字符 '[:*?"<>|]'
     result = name.replace("[","")
@@ -30,6 +27,8 @@ def validPathName(name:str):
     return result
 
 def convert(val):
+    FFMPEG_PATH = Path("resources", "app.asar.unpacked", "resources", "ffmpeg", "bin", "ffmpeg.exe").absolute()
+    logging.warning('ffmpeg path: ' + str(FFMPEG_PATH))
     downloadDir = val['path']  # cache file root (should be tv.danmaku.bili/download/...)
     outputDir = val['output']  # output video file root
     
@@ -111,7 +110,7 @@ def convert(val):
                         # output.mp4的绝对路径
                         filePathOrigin = Path(M4SDir, "Output.mp4")
                         if not Path.exists(filePathOrigin):
-                            out = subprocess.run(["./ffmpeg/bin/ffmpeg.exe", "-i", str(Path(M4SDir, "video.m4s")), "-i", str(Path(M4SDir, "audio.m4s")), "-codec", "copy", str(Path(M4SDir, "Output.mp4"))], capture_output=True, bufsize=4096)
+                            out = subprocess.run([str(FFMPEG_PATH), "-i", str(Path(M4SDir, "video.m4s")), "-i", str(Path(M4SDir, "audio.m4s")), "-codec", "copy", str(Path(M4SDir, "Output.mp4"))], capture_output=True, bufsize=4096)
                             logging.info("Output.mp4 not exist, execute command: " + str(out.args))
                             logging.info(out.stdout)
                         Path.rename(filePathOrigin, filePathOutput)

@@ -45,9 +45,8 @@ function createWindow() {
 
 var { PythonShell } = require('python-shell');
 let pyshell = new PythonShell('src/flask/app.py');
-let pyProc = require('child_process');
+let pyProc = require('child_process')
 var myExec = null;
-
 // 启动flask server，通过python-shell 调用python脚本（开发调试阶段）
 function startServer() {
   pyshell.on('message', function (message) {
@@ -60,19 +59,15 @@ function startServer() {
 function startServer_EXE() {
   // 当前应用的目录
   // 由于打包前后 即开发环境和生产环境的根目录不同
-  const appPath = app.isPackaged ? dirname(app.getPath('exe')) : app.getAppPath()
+  // const appPath = app.isPackaged ? dirname(app.getPath('exe')) : app.getAppPath()
+  let serverpath = join(__dirname, "../../resources/app.exe").replace("app.asar", "app.asar.unpacked");
+  console.log(serverpath)
   // let script = join(__dirname, 'app.exe')
-  let script = join(appPath, 'app.exe')
-  myExec = pyProc.execFile(script, (error, stdout, stderr) => {
-    if (error) {
-      console.log(stderr)
-      throw error;
-    }
-    console.log('flask server start success')
-    console.log(stdout);
+
+  myExec = pyProc.execFile(serverpath)
+  myExec.stdout.on('data', (data) => {
+    console.log(`Received chunk ${data}`);
   }); 
-  if (pyProc != null) {
-  }
 }
 
 function stopServer() {
@@ -109,7 +104,7 @@ const GetProcessInfo = (port) =>
           plist.push(portInfo.slice(idx, idx += 5))
         }
         plist.forEach((element) => {
-          console.log('killing' + element)
+          console.log('Killing process: ' + element)
           process.kill(element[element.length - 1], 'SIGTERM')
         })
         console.log('flask server shutdown success')
