@@ -1,0 +1,45 @@
+{
+  "name": "bilibili-cache-converter-gui",
+  "version": "1.0.0-fc.1",
+  "description": "Converting Bilibili App Cache to Normal mp4 and ass.",
+  "main": "./out/main/index.js",
+  "author": "BlueCitizen",
+  "homepage": "https://github.com/BlueCitizens/bilibili-app-cache-converter",
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "start": "electron-vite preview",
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "postinstall": "electron-builder install-app-deps",
+    "build:unpack": "npm run build && electron-builder --dir",
+    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "npm run build && electron-builder --mac",
+    "build:linux": "npm run build && electron-builder --linux",
+    "build-python": "pyinstaller -D -p ./venv/Lib/site-packages src/flask/app.py --distpath ./pydist"
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "^3.0.0",
+    "@electron-toolkit/utils": "^3.0.0",
+    "@mdui/icons": "^1.0.2",
+    "axios": "^1.6.7",
+    "electron-updater": "^6.1.7",
+    "mdui": "^2.0.3",
+    "python-shell": "^5.0.0",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@electron-toolkit/eslint-config": "^1.0.1",
+    "@rushstack/eslint-patch": "^1.6.1",
+    "@vitejs/plugin-vue": "^5.0.3",
+    "@vue/eslint-config-prettier": "^9.0.0",
+    "electron": "^28.2.0",
+    "electron-builder": "^24.9.1",
+    "electron-vite": "^2.0.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-vue": "^9.20.1",
+    "prettier": "^3.2.4",
+    "vite": "^5.0.12",
+    "vue": "^3.4.15"
+  }
+}

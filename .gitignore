@@ -1,0 +1,11 @@
+.idea
+node_modules
+out
+venv/
+app.dist/
+app.exe
+app.spec
+bilicache.log
+dist/
+npminstall-debug.log
+nuitka-crash-report.xml
