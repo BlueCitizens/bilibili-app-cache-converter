@@ -9,3 +9,4 @@ bilicache.log
 dist/
 npminstall-debug.log
 nuitka-crash-report.xml
+**/ffmpeg/*
