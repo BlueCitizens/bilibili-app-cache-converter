@@ -1,0 +1,10 @@
+venv/
+app.dist/
+app.build/
+app.onefile-build/
+app.exe
+bilicache.log
+resources/ffmpeg/
+src/flask/app.py
+src/flask/scripts/__pycache__/
+venv/

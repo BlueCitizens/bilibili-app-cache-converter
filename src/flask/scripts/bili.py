@@ -27,7 +27,7 @@ def validPathName(name:str):
     return result
 
 def convert(val):
-    FFMPEG_PATH = Path("resources", "app.asar.unpacked", "resources", "ffmpeg", "bin", "ffmpeg.exe").absolute()
+    FFMPEG_PATH = Path("resources", "ffmpeg", "bin", "ffmpeg.exe").absolute()
     logging.warning('ffmpeg path: ' + str(FFMPEG_PATH))
     downloadDir = val['path']  # cache file root (should be tv.danmaku.bili/download/...)
     outputDir = val['output']  # output video file root
