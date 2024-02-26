@@ -19,6 +19,9 @@
 ### build flask
 使用任何python打包方式，pyinstaller和nuitka都可以正常打包。
 
+### ffmpeg
+将ffmpeg放在```/resources```目录下
+
 ### build electron
 ```
 npm run build:win
