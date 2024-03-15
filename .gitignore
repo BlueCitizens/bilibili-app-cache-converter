@@ -13,3 +13,4 @@ nuitka-crash-report.xml
 test/
 app.build/
 app.onefile-build/
+src\flask\scripts\__pycache__
