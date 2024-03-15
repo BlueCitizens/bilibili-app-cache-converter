@@ -10,3 +10,6 @@ dist/
 npminstall-debug.log
 nuitka-crash-report.xml
 **/ffmpeg/*
+test/
+app.build/
+app.onefile-build/

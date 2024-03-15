@@ -108,13 +108,29 @@ def convert(val):
                         # 在此路径下调用cmd : ffmpeg -i video.m4s -i audio.m4s -codec copy Output.mp4
                         
                         # output.mp4的绝对路径
+                        filePathVideoPart = Path(M4SDir, "video.m4s")
+                        filePathAudioPart = Path(M4SDir, "audio.m4s")
                         filePathOrigin = Path(M4SDir, "Output.mp4")
                         if not Path.exists(filePathOrigin):
-                            out = subprocess.run([str(FFMPEG_PATH), "-i", str(Path(M4SDir, "video.m4s")), "-i", str(Path(M4SDir, "audio.m4s")), "-codec", "copy", str(Path(M4SDir, "Output.mp4"))], capture_output=True, bufsize=4096)
-                            logging.info("Output.mp4 not exist, execute command: " + str(out.args))
+                            cmdArgs = []
+                            cmdArgs.append(str(FFMPEG_PATH))
+                            if(Path.exists(filePathVideoPart)):
+                                cmdArgs.append("-i")
+                                cmdArgs.append(str(filePathVideoPart))
+                            if(Path.exists(filePathAudioPart)):
+                                cmdArgs.append("-i")
+                                cmdArgs.append(str(filePathAudioPart))
+                            cmdArgs.append("-codec")
+                            cmdArgs.append("copy")     
+                            cmdArgs.append(str(filePathOrigin))    
+                            
+                            logging.info("Output.mp4 not exist, execute command: " + str(cmdArgs))                   
+                            # out = subprocess.run([str(FFMPEG_PATH), "-i", str(Path(M4SDir, "video.m4s")), "-i", str(Path(M4SDir, "audio.m4s")), "-codec", "copy", str(Path(M4SDir, "Output.mp4"))], capture_output=True, bufsize=4096)
+                            out = subprocess.run(cmdArgs, capture_output=True, bufsize=4096)
+                            # logging.info("Output.mp4 not exist, execute command: " + str(out.args))
                             logging.info(out.stdout)
                         Path.rename(filePathOrigin, filePathOutput)
-                        logging.info(": " + str(currentOutputDir))
+                        logging.info("Output video: " + str(currentOutputDir))
 
                     if Path.exists(danmakuPathOutput):
                         Path.unlink(danmakuPathOutput) 
