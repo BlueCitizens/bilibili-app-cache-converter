@@ -69,18 +69,23 @@ def convert(val):
                 # 处理标题中的斜线 否则会被误判为下级目录
                 videoTitle = row_data.get('title', 'no title').replace('/', chr(ord('/') + 65248)).replace('\\', chr(ord(
                     '\\') + 65248))
-                logging.info("Current main title: " + videoTitle)
-                
+
+                videoTitle += (" " + str(row_data.get('bvid'))) if row_data.get('bvid') else ""   
+                videoTitle += (" " + str(row_data.get('season_id'))) if row_data.get('season_id') else ""
+                logging.info("Current main title: " + videoTitle)                
+
                 upName = row_data.get("owner_name", "未知up主")
                 # videoSubtitle = row_data.get('page_data', 'no page data').get('download_subtitle', 'no subtitle').replace(
                 #     '/', chr(ord('/') + 65248)).replace('\\', chr(ord('\\') + 65248))
-                videoSubtitle = ""
+                videoSubtitle = "undefined"
                 videoQualityWidth = '0'
                 videoQualityHeight = '0'
                 if row_data.get('page_data'):
                     logging.info("This part is a common video.")
                     videoSubtitle = row_data.get('page_data').get('part', videoTitle).replace(
                     '/', chr(ord('/') + 65248)).replace('\\', chr(ord('\\') + 65248))
+                    cid = row_data.get('page_data').get('cid', "")
+                    videoSubtitle += (" " + str(cid)) if cid != "" else ""
                     videoQualityWidth = row_data.get('page_data').get('width', '0')
                     videoQualityHeight = row_data.get('page_data').get('height', '0')
                 elif row_data.get('ep'):
@@ -88,6 +93,8 @@ def convert(val):
                     upName = "剧集"
                     videoSubtitle = row_data.get('ep').get('index_title', videoTitle).replace(
                     '/', chr(ord('/') + 65248)).replace('\\', chr(ord('\\') + 65248))
+                    bvid = row_data.get('ep').get('bvid', "")
+                    videoSubtitle += (" " + str(bvid)) if bvid != "" else ""
                     videoQualityWidth = row_data.get('ep').get('width', '0')
                     videoQualityHeight = row_data.get('ep').get('height', '0')
                 
@@ -116,7 +123,7 @@ def convert(val):
 
                     # newName = videoName + cDir + ".mp4"
                     if multiFlag == 0:
-                        newName = validPathName(videoTitle)
+                        newName = validPathName(videoSubtitle)
                     elif multiFlag == 1:
                         newName = validPathName(videoSubtitle)
                     currentOutputDir = Path(currentOutputDir, validPathName(videoTitle))
