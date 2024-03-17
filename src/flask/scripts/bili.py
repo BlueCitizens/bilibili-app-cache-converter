@@ -65,18 +65,39 @@ def convert(val):
                 # 读取json文件数据为字典
                 with entry_file.open(mode='r', encoding='utf-8-sig') as f:
                     row_data = json.load(f)  # row_data是dict类型
+
                 # 处理标题中的斜线 否则会被误判为下级目录
                 videoTitle = row_data.get('title', 'no title').replace('/', chr(ord('/') + 65248)).replace('\\', chr(ord(
                     '\\') + 65248))
-                videoSubtitle = row_data.get('page_data', 'no page data').get('download_subtitle', 'no subtitle').replace(
-                    '/', chr(ord('/') + 65248)).replace('\\', chr(ord('\\') + 65248))
-                videoQualityWidth = row_data.get('page_data', 'no page data').get('width', 'no width')
-                videoQualityHeight = row_data.get('page_data', 'no page data').get('height', 'no height')
-                upName = row_data.get("owner_name", "Undefined")
                 logging.info("Current main title: " + videoTitle)
+                
+                upName = row_data.get("owner_name", "未知up主")
+                # videoSubtitle = row_data.get('page_data', 'no page data').get('download_subtitle', 'no subtitle').replace(
+                #     '/', chr(ord('/') + 65248)).replace('\\', chr(ord('\\') + 65248))
+                videoSubtitle = ""
+                videoQualityWidth = '0'
+                videoQualityHeight = '0'
+                if row_data.get('page_data'):
+                    logging.info("This part is a common video.")
+                    videoSubtitle = row_data.get('page_data').get('part', videoTitle).replace(
+                    '/', chr(ord('/') + 65248)).replace('\\', chr(ord('\\') + 65248))
+                    videoQualityWidth = row_data.get('page_data').get('width', '0')
+                    videoQualityHeight = row_data.get('page_data').get('height', '0')
+                elif row_data.get('ep'):
+                    logging.info("This part is a bangumi video.")
+                    upName = "剧集"
+                    videoSubtitle = row_data.get('ep').get('index_title', videoTitle).replace(
+                    '/', chr(ord('/') + 65248)).replace('\\', chr(ord('\\') + 65248))
+                    videoQualityWidth = row_data.get('ep').get('width', '0')
+                    videoQualityHeight = row_data.get('ep').get('height', '0')
+                
                 logging.info("Current UPzhu: " + upName)
                 logging.info("Current subtitle: " + videoSubtitle)
+
+                # videoQualityWidth = row_data.get('page_data', 'no page data').get('width', 'no width')
+                # videoQualityHeight = row_data.get('page_data', 'no page data').get('height', 'no height')
                 logging.info("Current resolution: " + str(videoQualityWidth) + '*' + str(videoQualityHeight))
+
                 # 转换后的danmaku.ass在与danmaku.xml同级目录下
                 danmakuXMLPath = Path(PDir, "danmaku.xml")
                 danmakuASSPath = Path(PDir, "danmaku.ass")
