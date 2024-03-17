@@ -10,7 +10,6 @@
 - 打开即用
 
 ### 原生版本
-Electron构建的版本文件较大，可以选择无GUI的便携版本
 - 下载release中的xxx-Windows-amd64.zip
 - 解压到任意文件夹
 - 运行bcc.exe
