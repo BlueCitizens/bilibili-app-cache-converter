@@ -26,6 +26,7 @@
     "electron-updater": "^6.1.7",
     "mdui": "^2.0.3",
     "python-shell": "^5.0.0",
+    "vue-clipboard3": "^2.0.0",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
