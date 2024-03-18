@@ -1,5 +1,10 @@
 # BiliAppCacheConverter
-一个将B站（哔哩哔哩，bilibili）手机app中的缓存文件合并为mp4视频和ass字幕的工具，基于Electron，flask和ffmpeg，使用nuitka和electron-builder构建
+
+![Static Badge](https://img.shields.io/badge/node-%3E%3D20.11.0-blue)
+![Static Badge](https://img.shields.io/badge/npm-%3E%3D10.2.0-blue)
+![GitHub License](https://img.shields.io/github/license/BlueCitizens/bilibili-app-cache-converter)
+
+一个将B站（哔哩哔哩，bilibili）手机app中的缓存文件合并为mp4视频和ass字幕的工具，基于Electron，flask和ffmpeg，使用nuitka和electron-builder构建。
 
 ## 使用
 目前仅支持Win10 / Win11
@@ -45,4 +50,4 @@ npm run build:win
 ## 致谢
 xml弹幕文件转ass字幕文件使用了该仓库https://github.com/m13253/danmaku2ass
 
-ffmpeg是一款强大的开源音视频软件
+ffmpeg是一款强大的开源音视频软件https://github.com/FFmpeg/FFmpeg
