@@ -2,6 +2,8 @@
 
 ![Static Badge](https://img.shields.io/badge/node-%3E%3D20.11.0-blue)
 ![Static Badge](https://img.shields.io/badge/npm-%3E%3D10.2.0-blue)
+![Static Badge](https://img.shields.io/badge/electron-%20%5E28.2.0-blue)
+![Static Badge](https://img.shields.io/badge/vue-%5E3.4.15-green)
 ![GitHub License](https://img.shields.io/github/license/BlueCitizens/bilibili-app-cache-converter)
 
 一个将B站（哔哩哔哩，bilibili）手机app中的缓存文件合并为mp4视频和ass字幕的工具，基于Electron，flask和ffmpeg，使用nuitka和electron-builder构建。
