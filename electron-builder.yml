@@ -12,6 +12,7 @@ files:
   - '!**/node_modules/{axios/*,mdui/*,vue-router/*}'
   - '!**/node_modules/*/icons/*'
   - '!app.*/*'
+  - '!test/*'
 asarUnpack:
   - resources/**
 win:
