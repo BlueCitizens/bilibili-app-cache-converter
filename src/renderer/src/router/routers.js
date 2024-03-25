@@ -3,12 +3,30 @@
 const routes = [
     {
         path: '/',
-        redirect: '/index',
+        redirect: '/index/android',
     },
     {
         path: '/index',
-        component:()=> import('@renderer/components/Index.vue')
+        component: () => import('@renderer/components/Index.vue'),
+        children: [
+            {
+                path: "android",
+                name: "android",
+                component: () => import('@renderer/components/Android.vue')
+            },
+            {
+                path: "windows",
+                name: "windows",
+                component: () => import('@renderer/components/Windows.vue')
+            },
+            {
+                path: "settings",
+                name: "settings",
+                component: () => import('@renderer/components/Settings.vue')
+            },
+        ]
     },
+
 
 ]
 
