@@ -2,8 +2,8 @@
 
 body {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   overflow: hidden;
   background-image: url('./bilibili.svg');
   /* background-color: transparent; */
@@ -33,6 +33,31 @@ code {
   justify-content: center;
   flex-direction: column;
   margin-bottom: 80px;
+}
+
+.index-layout-left {
+  vertical-align: middle;
+  height: 100vh;
+}
+
+.index-layout-main {
+  /* min-height: 300px; */
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  background-color: hsla(0, 0%, 100%, 0.5);
+}
+
+.main-card {
+  width: 400px;
+  padding: 20px 20px 20px 20px;
+  background-color: hsl(0, 0%, 100%);
+}
+
+.navi {
+  position: relative;
+  height: 100%;
 }
 
 .logo {
@@ -115,6 +140,7 @@ code {
   font-size: 12px;
   line-height: 14px;
   opacity: 0.8;
+
   &:last-child {
     border: none;
   }
@@ -133,6 +159,7 @@ code {
 }
 
 @media (max-width: 350px) {
+
   .tip,
   .actions {
     display: none;

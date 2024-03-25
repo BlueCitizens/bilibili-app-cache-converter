@@ -33,9 +33,12 @@ def convert(val):
     outputDir = val['output']  # output video file root
     
     CREATE_UP_DIR = val['isUp'] # 如果需要将同一个up的视频放在单独一个文件夹,则改为True
+    TRANS_DM = val['isDm']
     REMOVE_ORI = val['isDel']  # True if would like to delete origin cache file
 
-    logging.info(CREATE_UP_DIR)
+    logging.info("CREATE_UP_DIR: " + str(CREATE_UP_DIR))
+    logging.info("TRANS_DM: " + str(TRANS_DM))
+    logging.info("REMOVE_ORI: " + str(REMOVE_ORI))
 
     # collect failed
     failedVideos = []
@@ -108,13 +111,13 @@ def convert(val):
                     # videoQualityWidth = row_data.get('page_data', 'no page data').get('width', 'no width')
                     # videoQualityHeight = row_data.get('page_data', 'no page data').get('height', 'no height')
                     logging.info("Current resolution: " + str(videoQualityWidth) + '*' + str(videoQualityHeight))
+                    if TRANS_DM:
+                        # 转换后的danmaku.ass在与danmaku.xml同级目录下
+                        danmakuXMLPath = Path(PDir, "danmaku.xml")
+                        danmakuASSPath = Path(PDir, "danmaku.ass")
 
-                    # 转换后的danmaku.ass在与danmaku.xml同级目录下
-                    danmakuXMLPath = Path(PDir, "danmaku.xml")
-                    danmakuASSPath = Path(PDir, "danmaku.ass")
-
-                    danmaku2ass.Danmaku2ASS(str(danmakuXMLPath), 'Bilibili', str(danmakuASSPath), videoQualityWidth, videoQualityHeight, 0,
-                                'Microsoft YaHei', 40)
+                        danmaku2ass.Danmaku2ASS(str(danmakuXMLPath), 'Bilibili', str(danmakuASSPath), videoQualityWidth, videoQualityHeight, 0,
+                                    'Microsoft YaHei', 40)
 
                     for M4SDir in list(filter(Path.is_dir, Path.iterdir(PDir))):  # 视频一般放在分p文件夹中的数字文件夹中，一般数字文件夹仅一个
                         sepPath = M4SDir
@@ -163,11 +166,11 @@ def convert(val):
                                 logging.info(out.stdout)
                             Path.rename(filePathOrigin, filePathOutput)
                             logging.info("Output video: " + str(currentOutputDir))
-
-                        if Path.exists(danmakuPathOutput):
-                            Path.unlink(danmakuPathOutput) 
-                            logging.warning('Ass already exist, but replace it with new one.')
-                        Path.rename(danmakuASSPath, danmakuPathOutput)
+                        if TRANS_DM:
+                            if Path.exists(danmakuPathOutput):
+                                Path.unlink(danmakuPathOutput) 
+                                logging.warning('Ass already exist, but replace it with new one.')
+                            Path.rename(danmakuASSPath, danmakuPathOutput)
 
                 except Exception as e:
                     logging.error(e)
