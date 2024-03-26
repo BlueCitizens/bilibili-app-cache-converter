@@ -6,12 +6,12 @@
                     <mdui-navigation-rail-item @click="gotoPostDetail('/index/android')" value="android">
                         <mdui-icon-phone-android--outlined slot="icon"></mdui-icon-phone-android--outlined>
                         Android</mdui-navigation-rail-item>
-                    <!-- <mdui-navigation-rail-item @click="gotoPostDetail('/index/windows')" value="windows">
+                    <mdui-navigation-rail-item @click="gotoPostDetail('/index/windows')" value="windows">
                         <mdui-icon-desktop-windows--outlined slot="icon"></mdui-icon-desktop-windows--outlined>
                         Windows</mdui-navigation-rail-item>
                     <mdui-navigation-rail-item @click="gotoPostDetail('/index/settings')" value="settings">
                         <mdui-icon-settings--outlined slot="icon"></mdui-icon-settings--outlined>
-                        Settings</mdui-navigation-rail-item> -->
+                        Settings</mdui-navigation-rail-item>
                 </mdui-navigation-rail>
             </mdui-layout-item>
 

@@ -2,7 +2,7 @@ from flask import Flask, request
 from flask_cors import cross_origin
 import signal, json
 
-from scripts import bili
+from scripts import bili, pc
 
 app = Flask(__name__)
 
@@ -18,7 +18,15 @@ def convert():
         data = json.loads(request.data)
         # path = json.dumps(data['form'])
         res = bili.convert(data['form'])
-    
+    return res
+
+@app.route('/convertpc',methods=['POST'])
+@cross_origin()
+def convertPC():
+    if request.method == 'POST':
+        data = json.loads(request.data)
+        # path = json.dumps(data['form'])
+        res = pc.convert(data['form'])
     return res
 
 

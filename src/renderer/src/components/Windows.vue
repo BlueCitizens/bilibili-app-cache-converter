@@ -14,8 +14,14 @@
                     <mdui-icon-attach-file></mdui-icon-attach-file>
                 </mdui-button-icon>
             </mdui-text-field>
-            <mdui-checkbox ref="checkup" checked>UP主Folder</mdui-checkbox>
+            <mdui-select label="缓冲区大小 (MB)" :value="this.form.bufferSize">
+                <mdui-menu-item value="128">128</mdui-menu-item>
+                <mdui-menu-item value="256">256</mdui-menu-item>
+                <mdui-menu-item value="512">512</mdui-menu-item>
+            </mdui-select>
+            <mdui-checkbox ref="checkup" checked>UP主单独文件夹</mdui-checkbox>
             <mdui-checkbox ref="checkdel" disabled>删除源</mdui-checkbox>
+
             <mdui-button full-width variant="tonal" :disabled="this.btn" v-on:click="requestConvert">
                 <mdui-icon-autorenew></mdui-icon-autorenew>
             </mdui-button>
@@ -49,7 +55,12 @@ import useClipboard from "vue-clipboard3";
 import { snackbar } from 'mdui/functions/snackbar.js';
 import { getTheme } from 'mdui/functions/getTheme.js';
 import { setColorScheme } from 'mdui/functions/setColorScheme.js';
-import { hello, convert } from '@renderer/api';
+import { hello, convertPC } from '@renderer/api';
+
+import 'mdui/components/select.js';
+import 'mdui/components/menu-item.js';
+
+
 export default {
     name: 'android',
     setup() {
@@ -85,7 +96,8 @@ export default {
                 path: '',
                 output: '',
                 isUp: false,
-                isDel: false
+                isDel: false,
+                bufferSize: 128
             },
 
             checked: false,
@@ -121,7 +133,7 @@ export default {
             this.btn = true
             this.progress.visible = ''
             let form = JSON.parse(JSON.stringify(this.form));
-            convert({ form }).then((response) => {
+            convertPC({ form }).then((response) => {
                 // console.log(response.data)
                 // if (response.code === 200) {
                 // }

@@ -17,3 +17,12 @@ export function convert(form) {
         data: form
     })
 }
+
+// 请求转换PC
+export function convertPC(form) {
+    return request({
+        url: '/convertpc',
+        method: 'post',
+        data: form
+    })
+}
